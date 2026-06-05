@@ -40,7 +40,7 @@ file = st.sidebar.file_uploader("Upload CSV", type=["csv"])
 if file:
     df = pd.read_csv(file)
 else:
-    df = pd.read_csv("data/customers.csv")
+    df = pd.read_csv(r"C:\Users\indun\Downloads\customers.csv")
 
 # Preview
 st.subheader("📂 Dataset")
