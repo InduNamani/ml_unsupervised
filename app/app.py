@@ -28,7 +28,7 @@ use_sample = st.sidebar.checkbox("Use sample dataset", value=True)
 if use_sample and uploaded_file is None:
     # Load the default dataset
     try:
-        df = pd.read_csv('embedded_system_network_security_dataset.csv')
+        df = pd.read_csv(r"C:\Users\indun\Downloads\embedded_system_network_security_dataset.csv")
         st.sidebar.success("✓ Sample dataset loaded")
     except FileNotFoundError:
         st.error("Dataset file not found. Please upload a CSV file.")
