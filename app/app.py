@@ -457,8 +457,8 @@ if run_btn or True:
                 textinfo="label+percent",
                 textfont=dict(size=11),
             ))
-            fig_pie.update_layout(**PLOTLY_THEME, height=320, showlegend=False,
-                                   margin=dict(l=10,r=10,t=20,b=10))
+            pie_theme = {**PLOTLY_THEME, "margin": dict(l=10, r=10, t=20, b=10)}
+            fig_pie.update_layout(**pie_theme, height=320, showlegend=False)
             st.plotly_chart(fig_pie, use_container_width=True)
 
         # Feature stats per cluster
