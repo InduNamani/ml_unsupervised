@@ -203,10 +203,23 @@ def compute_all(pca_n, pca_whiten, pca_solver, tsne_perp, tsne_iter,
     X_pca = pca.fit_transform(X_s)
 
     # t-SNE (on PCA-reduced for speed)
+    import sklearn
     n_dim = 3 if viz_dim == "3D" else 2
     X_pre = PCA(n_components=min(50, X_s.shape[1]), random_state=random_state).fit_transform(X_s)
-    tsne = TSNE(n_components=n_dim, perplexity=tsne_perp, n_iter=tsne_iter, learning_rate=tsne_lr,
-                early_exaggeration=tsne_ee, init=tsne_init, metric=tsne_metric, random_state=random_state, n_jobs=-1)
+
+    sk_version = tuple(int(x) for x in sklearn.__version__.split(".")[:2])
+    iter_param = "max_iter" if sk_version >= (1, 5) else "n_iter"
+    tsne_kwargs = dict(
+        n_components=n_dim,
+        perplexity=tsne_perp,
+        learning_rate=tsne_lr,
+        early_exaggeration=tsne_ee,
+        init=tsne_init,
+        metric=tsne_metric,
+        random_state=random_state,
+    )
+    tsne_kwargs[iter_param] = tsne_iter
+    tsne = TSNE(**tsne_kwargs)
     X_tsne = tsne.fit_transform(X_pre)
 
     return pca, X_pca, X_tsne, y, tsne.kl_divergence_
